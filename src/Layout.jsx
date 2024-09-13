@@ -217,6 +217,13 @@ export default defineComponent({
       drag.value = null;
     };
 
+    // Method to handle split resize event
+    const onSplitResize = (event, split, size) => {
+      const nodeId = split.props['node-id'];
+      state.value.split = size;
+      emit('onSplitResize', event, split, size);
+    };
+
     // Update preview pane
     function previewPane(attach, targetDom, amount = 33) {
       if (attach === -1) {

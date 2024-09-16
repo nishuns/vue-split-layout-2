@@ -1,128 +1,96 @@
 <template>
   <div :class="splitClass">
-    <div class="content" :style="{ flexBasis: state.split }">
-      <slot name="first" />
+    <div class="content" :style="{ 'flex-basis': state.split }">
+      <slot name="first"></slot>
     </div>
-    <div class="splitter" @mousedown="startResize" />
+    <div class="splitter" @mousedown="startResize"></div>
     <div class="content">
-      <slot name="second" />
+      <slot name="second"></slot>
     </div>
   </div>
 </template>
 
 <script>
-import { defineComponent, ref, computed } from 'vue';
-
-export default defineComponent({
-  name: 'SplitPane',
+export default {
+  name: 'Split',
   props: {
     resizeable: { type: Boolean, default: false },
     dir: { type: String, default: 'horizontal' },
-    split: { type: String, default: '50%' },
+    split: { type: String, default: '50%' }
   },
-  setup(props, { emit }) {
-    // Reactive state
-    const state = ref({
-      resizing: false,
-      split: props.split || '50%',
-    });
-
-    // Computed property for split class
-    const splitClass = computed(() => [
-      'split',
-      props.dir,
-      state.value.resizing ? 'resizing' : '',
-      props.resizeable ? 'resizeable' : '',
-    ]);
-
-    // Method to start resizing
-    const startResize = (event) => {
-      if (!props.resizeable || event.button !== 0) return;
-      event.stopPropagation();
-      event.preventDefault();
-      state.value.resizing = true;
-
-      const drag = (event) => {
-        if (event.button !== 0) return;
-
-        const isHorizontal = props.dir === 'horizontal';
-        const splitter =
-          (isHorizontal
-            ? event.target.parentNode.children[1].clientWidth
-            : event.target.parentNode.children[1].clientHeight) / 2;
-        const parentRect = event.target.parentNode.getBoundingClientRect();
-        const splitSize = isHorizontal
-          ? ((event.x - parentRect.left - splitter) /
-              event.target.parentNode.clientWidth) *
-            100
-          : ((event.y - parentRect.top - splitter) /
-              event.target.parentNode.clientHeight) *
-            100;
-
-        state.value.split = splitSize + '%';
-        emit('onSplitResize', event, state.value.split);
-      };
-
-      const drop = (event) => {
-        if (event.button !== 0) return;
-        state.value.resizing = false;
-        document.removeEventListener('mousemove', drag);
-        document.removeEventListener('mouseup', drop);
-      };
-
-      document.addEventListener('mousemove', drag);
-      document.addEventListener('mouseup', drop);
-    };
-
+  data() {
     return {
-      state,
-      splitClass,
-      startResize,
-    };
+      state: {
+        resizing: false,
+        split: this.split
+      }
+    }
   },
-});
+  computed: {
+    splitClass() {
+      return [
+        'split',
+        this.dir,
+        this.state.resizing ? 'resizing' : '',
+        this.resizeable ? 'resizeable' : ''
+      ]
+    }
+  },
+  methods: {
+    startResize(event) {
+      if (!this.resizeable || event.button !== 0) return
+      event.preventDefault()
+      this.state.resizing = true
+      const drag = (e) => {
+        const horizontal = this.dir === 'horizontal'
+        const splitterSize = (horizontal ? this.$el.children[1].clientWidth : this.$el.children[1].clientHeight) / 2
+        const parentRect = this.$el.getBoundingClientRect()
+        const newSize = horizontal
+          ? (e.clientX - parentRect.left - splitterSize) / this.$el.clientWidth * 100
+          : (e.clientY - parentRect.top - splitterSize) / this.$el.clientHeight * 100
+        this.state.split = newSize + '%'
+      }
+      const stopResize = () => {
+        this.state.resizing = false
+        document.removeEventListener('mousemove', drag)
+        document.removeEventListener('mouseup', stopResize)
+      }
+      document.addEventListener('mousemove', drag)
+      document.addEventListener('mouseup', stopResize)
+    }
+  }
+}
 </script>
 
 <style scoped>
 .split {
   display: flex;
-  flex: 1;
   height: 100%;
 }
 
-.split > .content {
-  position: relative;
-  display: flex;
-  box-sizing: border-box;
+.content {
+  flex: 1;
   overflow: hidden;
 }
 
-.split > .content > * {
-  flex: 1;
-  height: 100%;
-}
-
-.split > .content:last-child {
-  flex: 1;
-}
-
-.split > .splitter {
+.splitter {
   flex-basis: 6px;
+  background: #ccc;
 }
 
-.split.vertical {
-  flex-direction: column;
-}
-
-.split.horizontal {
+.horizontal {
   flex-direction: row;
 }
 
-.split.resizeable.vertical > .splitter {
-  cursor: row-resize;
+.vertical {
+  flex-direction: column;
 }
 
-.split.resizeable.horizontal > .splitter {
+.resizeable.horizontal .splitter {
   cursor: col-resize;
+}
+
+.resizeable.vertical .splitter {
+  cursor: row-resize;
 }
 </style>

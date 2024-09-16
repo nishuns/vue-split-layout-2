@@ -1,4 +1,4 @@
-import Layout from './Layout'
+import Layout from './Layout.vue'
 import Split from './Split.vue'
 import Pane from './Pane.vue'
 import Tree from './Tree'

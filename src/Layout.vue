@@ -15,9 +15,7 @@
 
 <script>
 import Split from './Split.vue'
-import Tree from './Tree'
-import { cloneDeep } from 'lodash-es';
-
+import Tree from './tree'
 
 export default {
   name: 'Layout',
@@ -132,7 +130,7 @@ export default {
       const trect = e.target.getBoundingClientRect()
 
       this.drag = { node, offset: { x: e.clientX - trect.left, y: e.clientY - trect.top } }
-      this.savedNodes = cloneDeep(this.nodes)
+      this.savedNodes = structuredClone(this.nodes) // Using structuredClone for deep cloning
       Tree.from(this.nodes).removeChild(node)
 
       this.$refs.drag.style.top = `${trect.y - containerRect.top}px`

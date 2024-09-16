@@ -24,7 +24,6 @@
   "author": "Nischay Sharma sharmanischay23@gmail.com",
   "license": "MIT",
   "dependencies": {
-    "lodash-es": "^4.17.21",
     "vue": "^3.0.0"
   },
   "devDependencies": {

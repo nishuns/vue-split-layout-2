@@ -1,0 +1,46 @@
+.layout-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+}
+
+.layout-container>.preview {
+    position: absolute;
+    opacity: 0;
+    margin: 0;
+    pointer-events: none;
+}
+
+.layout-container>.views {
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.layout-container>.drag {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    display: none;
+    cursor: move;
+}
+
+/* child of drag */
+.layout-container>.drag * {
+    pointer-events: none !important;
+}
+
+.layout-container>.drag.dragging {
+    display: block;
+}
+
+.layout-container .drag>.view {
+    height: 100%;
+    width: 100%;
+}

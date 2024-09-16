@@ -16,7 +16,8 @@
 <script>
 import Split from './Split.vue'
 import Tree from './Tree'
-import cloneDeep from 'lodash/cloneDeep'
+import { cloneDeep } from 'lodash-es';
+
 
 export default {
   name: 'Layout',

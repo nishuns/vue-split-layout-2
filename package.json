@@ -24,8 +24,7 @@
   "author": "Nischay Sharma sharmanischay23@gmail.com",
   "license": "MIT",
   "dependencies": {
-    "lodash": "^4.17.21",
-    "rollup-plugin-terser": "^7.0.2",
+    "lodash-es": "^4.17.21",
     "vue": "^3.0.0"
   },
   "devDependencies": {

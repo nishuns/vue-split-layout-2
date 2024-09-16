@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import './Split.css';
 export default {
   name: 'Split',
   props: {
@@ -63,34 +64,5 @@ export default {
 </script>
 
 <style>
-.split {
-  display: flex;
-  height: 100%;
-}
 
-.content {
-  flex: 1;
-  overflow: hidden;
-}
-
-.splitter {
-  flex-basis: 6px;
-  background: #ccc;
-}
-
-.horizontal {
-  flex-direction: row;
-}
-
-.vertical {
-  flex-direction: column;
-}
-
-.resizeable.horizontal .splitter {
-  cursor: col-resize;
-}
-
-.resizeable.vertical .splitter {
-  cursor: row-resize;
-}
 </style>

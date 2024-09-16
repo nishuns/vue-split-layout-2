@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import { terser } from 'rollup-plugin-terser'
+import terser from '@rollup/plugin-terser'
 
 export default defineConfig({
   plugins: [vue()],
@@ -8,8 +8,8 @@ export default defineConfig({
     lib: {
       entry: './src/index.js',
       name: 'VueSplitLayout',
-      formats: ['umd'],
     },
+    sourcemap: true, // Enable sourcemaps for the whole build
     rollupOptions: {
       external: ['vue'],
       output: [
@@ -21,7 +21,6 @@ export default defineConfig({
           globals: {
             vue: 'Vue'
           },
-          sourcemap: true
         },
         {
           dir: 'dist',
@@ -32,7 +31,6 @@ export default defineConfig({
             vue: 'Vue'
           },
           plugins: [terser()], // Minify the output
-          sourcemap: true
         }
       ]
     }

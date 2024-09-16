@@ -62,7 +62,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .split {
   display: flex;
   height: 100%;

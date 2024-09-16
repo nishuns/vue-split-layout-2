@@ -19,7 +19,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style >
 .pane {
   position: relative;
   overflow: hidden;

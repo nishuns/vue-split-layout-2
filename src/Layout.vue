@@ -31,6 +31,16 @@ export default {
       savedNodes: null
     }
   },
+  computed: {
+    // Add layoutClass here
+    layoutClass() {
+      return {
+        'layout-container': true,
+        'edit-mode': this.edit,
+        'drag-mode': !!this.drag
+      };
+    }
+  },
   watch: {
     splits() {
       this.nodes = this.calcSplits()
@@ -130,7 +140,7 @@ export default {
       const trect = e.target.getBoundingClientRect()
 
       this.drag = { node, offset: { x: e.clientX - trect.left, y: e.clientY - trect.top } }
-      this.savedNodes = structuredClone(this.nodes) // Using structuredClone for deep cloning
+      this.savedNodes = structuredClone(this.nodes)
       Tree.from(this.nodes).removeChild(node)
 
       this.$refs.drag.style.top = `${trect.y - containerRect.top}px`

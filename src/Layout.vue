@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import './Layout.css';
 import Split from './Split.vue'
 import Tree from './tree'
 
@@ -225,35 +226,5 @@ export default {
 }
 </script>
 
-<style scoped>
-.layout-container {
-  display: flex;
-  flex-direction: column;
-  flex: 1 0 auto;
-  overflow: hidden;
-  position: relative;
-  height: 100%;
-}
-
-.views.dragging {
-  opacity: 0.7;
-}
-
-.preview {
-  position: absolute;
-  opacity: 0;
-}
-
-.drag {
-  display: none;
-}
-
-.drag.dragging {
-  display: block;
-}
-
-.view {
-  height: 100%;
-  width: 100%;
-}
+<style>
 </style>
